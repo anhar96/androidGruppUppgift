@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">SyltFabrik</string>
+    <string name="contacts">contacts</string>
+    <string name="recipe">recipe</string>
+    <string name="adressbook">adressbook</string>
+    <string name="batch_calculator">Batch Calculator</string>
+    <string name="CalculatorIMG">TODO</string>
+    <string name="ContactIMG">TODO</string>
+    <string name="RecipeIMG">TODO</string>
+    <string name="AdressIMG">TODO</string>
+    <string name="edittext_label_name">edittext_label_name</string>
+    <string name="edittext_label_phone">edittext_label_phone</string>
+    <string name="edittext_label_mail">edittext_label_mail</string>
+    <string name="button_label_contact">button_label_contact</string>
+    <string name="add_contact">add Contact</string>
+</resources>
