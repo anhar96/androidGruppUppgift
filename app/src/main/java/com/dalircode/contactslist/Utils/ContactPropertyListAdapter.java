@@ -38,33 +38,25 @@ public class ContactPropertyListAdapter extends ArrayAdapter<String> {
         this.mProperties = properties;
     }
 
-    //---------------------------Stuff to change--------------------------------------------
-
     private static class ViewHolder {
         TextView property;
         ImageView leftIcon;
         ImageView rightIcon;
     }
-    //--------------------------------------------------------------------------------------
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        /*
-         ************ ViewHolder Build Pattern Start ************
-         */
         final ViewHolder holder;
 
         if (convertView == null) {
             convertView = mInflater.inflate(layoutResource, parent, false);
             holder = new ViewHolder();
 
-            //---------------------------Stuff to change--------------------------------------------
             holder.property = convertView.findViewById(R.id.tvMiddleCardView);
             holder.leftIcon = convertView.findViewById(R.id.iconLeftCardView);
             holder.rightIcon = convertView.findViewById(R.id.iconRightCardView);
-            //--------------------------------------------------------------------------------------
 
 
             convertView.setTag(holder);
@@ -72,12 +64,10 @@ public class ContactPropertyListAdapter extends ArrayAdapter<String> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        //---------------------------Stuff to change--------------------------------------------
+
         final String property = getItem(position);
         holder.property.setText(property);
 
-        //Check if it is an email or phone number
-        //email
         if (property.contains("@")) {
             holder.leftIcon.setImageResource(mContext.getResources().getIdentifier("@drawable/ic_email", null, mContext.getPackageName()));
             holder.leftIcon.setOnClickListener(new View.OnClickListener() {
@@ -96,8 +86,6 @@ public class ContactPropertyListAdapter extends ArrayAdapter<String> {
 
         } else if ((property.length() != 0)) {
 
-            //Phone call
-
             holder.leftIcon.setImageResource(mContext.getResources().getIdentifier("@drawable/ic_phone", null, mContext.getPackageName()));
             holder.leftIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -112,15 +100,11 @@ public class ContactPropertyListAdapter extends ArrayAdapter<String> {
                 }
             });
 
-            ////setup the icon for sending text messages
-
             holder.rightIcon.setImageResource(mContext.getResources().getIdentifier("@drawable/ic_text", null, mContext.getPackageName()));
             holder.rightIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.d(TAG, "onClick: initiating text message....");
-
-                    //The number that we want to send SMS
                     Intent smsIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", property, null));
                     mContext.startActivity(smsIntent);
                 }
@@ -128,8 +112,6 @@ public class ContactPropertyListAdapter extends ArrayAdapter<String> {
 
         }
 
-
-        //--------------------------------------------------------------------------------------
 
         return convertView;
     }

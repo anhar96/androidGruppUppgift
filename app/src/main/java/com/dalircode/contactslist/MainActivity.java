@@ -78,14 +78,10 @@ public class MainActivity extends AppCompatActivity implements ViewContactsFragm
         init();
     }
 
-    //Initial the first fragment (ViewContacts fragment)
 
     public void init() {
         ViewContactsFragment fragment = new ViewContactsFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        //Replace whatever is in the fragment_container view with this fragment
-        // and add the transaction to the back stack so the user can navigate back
 
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
@@ -98,23 +94,16 @@ public class MainActivity extends AppCompatActivity implements ViewContactsFragm
     }
 
 
-    //Compress a bitmap by the @param "quality"
-    //Quality can be anywhere from 1-100 : 100 being the highest quality.
-
     public Bitmap compressBitmap(Bitmap bitmap, int quality) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream);
         return bitmap;
     }
 
-    //Generalized method for asking permission. Can pass any array of permissions
 
     public void verifyPermissions(String[] permissions) {
         ActivityCompat.requestPermissions(MainActivity.this, permissions, REQUEST_CODE);
     }
-
-    //Checks to see if permission was granted for the passed parameters
-    //ONLY ONE PERMISSION MAYT BE CHECKED AT A TIME
 
     public boolean checkPermission(String[] permission) {
         Log.d(TAG, "checkPermission: checking permissions for:" + permission[0]);

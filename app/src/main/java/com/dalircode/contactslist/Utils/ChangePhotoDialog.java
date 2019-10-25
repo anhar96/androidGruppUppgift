@@ -38,7 +38,6 @@ public class ChangePhotoDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_changephoto, container, false);
 
-        //initalize the textview for starting the camera
         TextView takePhoto = view.findViewById(R.id.dialogTakePhoto);
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +48,6 @@ public class ChangePhotoDialog extends DialogFragment {
 
             }
         });
-
-        //Initialize the textview for choosing an image from memory
 
         TextView selectPhoto = view.findViewById(R.id.dialogChoosePhoto);
         selectPhoto.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +62,6 @@ public class ChangePhotoDialog extends DialogFragment {
             }
         });
 
-        // Cancel button for closing the dialog
         TextView cancelDialog = view.findViewById(R.id.dialogCancel);
         cancelDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,29 +89,22 @@ public class ChangePhotoDialog extends DialogFragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //Results when taking a new image with camera
         if (requestCode == Init.CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Log.d(TAG, "onActivityResult: done taking a picture.");
 
-            //get the new image bitmap
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
             Log.d(TAG, "onActivityResult: receieved bitmap: " + bitmap);
 
-            //send the bitmap and fragment to the interface
             mOnPhotoReceived.getBitmapImage(bitmap);
             getDialog().dismiss();
         }
-
-        // Results when selecting new image from phone memory
 
         if(requestCode == Init.PICKFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK){
             Uri selectedImageUri = data.getData();
             File file = new File(selectedImageUri.toString());
             Log.d(TAG, "onActivityResult: images: " + file.getPath());
 
-
-            //send the bitmap and fragment to the interface
             mOnPhotoReceived.getImagePath(file.getPath());
             getDialog().dismiss();
 

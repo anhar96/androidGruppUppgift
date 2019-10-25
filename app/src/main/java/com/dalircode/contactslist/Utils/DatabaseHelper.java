@@ -92,8 +92,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    //Retrieve the contact unique id from the database using contact
-
     public Cursor getContactID(Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "SELECT * FROM " + TABLE_NAME +

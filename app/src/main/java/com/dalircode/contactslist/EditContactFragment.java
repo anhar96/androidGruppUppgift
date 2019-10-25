@@ -36,7 +36,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class EditContactFragment extends Fragment implements ChangePhotoDialog.OnPhotoReceivedListener {
     private static final String TAG = "EditContactFragment";
 
-    //This will evade the nullpointer exception whena adding to a new bundle from MainActivity
+
     public EditContactFragment() {
         super();
         setArguments(new Bundle());
@@ -64,44 +64,39 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
 
         mSelectedImagePath = null;
 
-        //set the heading the for the toolbar
+
         TextView heading = view.findViewById(R.id.textContactToolbar);
         heading.setText(getString(R.string.edit_contact));
 
-        //required for setting up the toolbar
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
 
-        //get the contact from the bundle
         mContact = getContactFromBundle();
 
         if (mContact != null) {
             init();
         }
 
-        //navigation for the backarrow
         ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
         ivBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked back arrow.");
-                //remove previous fragment from the backstack (therefore navigating back)
+
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
-        // save changes to the contact
+
         ImageView ivCheckMark = view.findViewById(R.id.ivCheckMark);
         ivCheckMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: saving the edited contact.");
-                //execute the save method for the database
 
                 if (checkStringIfNull(mName.getText().toString())) {
                     Log.d(TAG, "onClick: saving changes to the contact: " + mName.getText().toString());
 
-                    //get the database helper and save the contact
                     DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
                     Cursor cursor = databaseHelper.getContactID(mContact);
 
@@ -129,15 +124,11 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
 
         });
 
-        // initiate the dialog box for choosing an image
         ImageView ivCamera = view.findViewById(R.id.ivCamera);
         ivCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                /*
-                Make sure all permissions have been verified before opening the dialog
-                 */
                 for (int i = 0; i < Init.PERMISSIONS.length; i++) {
                     String[] permission = {Init.PERMISSIONS[i]};
                     if (((MainActivity) getActivity()).checkPermission(permission)) {
@@ -172,8 +163,6 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
         mName.setText(mContact.getName());
         mEmail.setText(mContact.getEmail());
         UniversalImageLoader.setImage(mContact.getProfileImage(), mContactImage, null, "");
-
-        //Setting the selected device to the spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.device_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -207,10 +196,7 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
                     if (databaseHelper.deleteContact(contactID) > 0) {
                         Toast.makeText(getActivity(), "Contact Deleted", Toast.LENGTH_SHORT).show();
 
-                        //clear the arguments ont he current bundle since the contact is deleted
                         this.getArguments().clear();
-
-                        //remove previous fragemnt from the backstack (therefore navigating back)
                         getActivity().getSupportFragmentManager().popBackStack();
                     } else {
                         Toast.makeText(getActivity(), "Database Error", Toast.LENGTH_SHORT).show();
@@ -219,9 +205,6 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-    //Retrieves the selected contact from the bundle (coming from MainActivity)
 
     private Contact getContactFromBundle() {
         Log.d(TAG, "getContactFromBundle: arguments: " + getArguments());
@@ -235,14 +218,12 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
     }
 
 
-    //Retrieves the selected image from the bundle (coming from ChangePhotoDialog)
-
     @Override
     public void getBitmapImage(Bitmap bitmap) {
         Log.d(TAG, "getBitmapImage: got the bitmap: " + bitmap);
-        //get the bitmap from 'ChangePhotoDialog'
+
         if (bitmap != null) {
-            //compress the image (if you like)
+
             ((MainActivity) getActivity()).compressBitmap(bitmap, 70);
             mContactImage.setImageBitmap(bitmap);
         }
@@ -259,7 +240,6 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
         }
     }
 
-    //Initialize the onTextChangeListener for formatting the phonenumber
 
     private void initOnTextChangeListener() {
 
@@ -289,29 +269,6 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
 
                 String number = s.toString();
                 Log.d(TAG, "afterTextChanged:  " + number);
-
-                if (number.length() == 3 && mPreviousKeyStroke != KeyEvent.KEYCODE_DEL
-                        && !number.contains("(")) {
-                    number = String.format("(%s", s.toString().substring(0, 3));
-                    mPhoneNumber.setText(number);
-                    mPhoneNumber.setSelection(number.length());
-                } else if (number.length() == 5 && mPreviousKeyStroke != KeyEvent.KEYCODE_DEL
-                        && !number.contains(")")) {
-                    number = String.format("(%s) %s",
-                            s.toString().substring(1, 4),
-                            s.toString().substring(4, 5));
-                    mPhoneNumber.setText(number);
-                    mPhoneNumber.setSelection(number.length());
-                } else if (number.length() == 10 && mPreviousKeyStroke != KeyEvent.KEYCODE_DEL
-                        && !number.contains("-")) {
-                    number = String.format("(%s) %s-%s",
-                            s.toString().substring(1, 4),
-                            s.toString().substring(6, 9),
-                            s.toString().substring(9, 10));
-                    mPhoneNumber.setText(number);
-                    mPhoneNumber.setSelection(number.length());
-
-                }
             }
         });
     }

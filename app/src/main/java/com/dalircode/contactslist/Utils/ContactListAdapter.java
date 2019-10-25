@@ -29,7 +29,7 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
 
     private LayoutInflater mInflater;
     private List<Contact> mContacts = null;
-    private ArrayList<Contact> arrayList; //used for the search bar
+    private ArrayList<Contact> arrayList;
     private int layoutResource;
     private Context mContext;
     private String mAppend;
@@ -55,21 +55,18 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        /*
-         ************ ViewHolder Build Pattern Start ************
-         */
         final ViewHolder holder;
 
         if(convertView == null){
             convertView = mInflater.inflate(layoutResource, parent, false);
             holder = new ViewHolder();
 
-            //---------------------------Stuff to change--------------------------------------------
-            holder.name = (TextView) convertView.findViewById(R.id.contactName);
-            holder.contactImage = (CircleImageView) convertView.findViewById(R.id.contactImage);
-            //--------------------------------------------------------------------------------------
 
-            holder.mProgressBar = (ProgressBar) convertView.findViewById(R.id.contactProgressBar);
+            holder.name = convertView.findViewById(R.id.contactName);
+            holder.contactImage = convertView.findViewById(R.id.contactImage);
+
+
+            holder.mProgressBar = convertView.findViewById(R.id.contactProgressBar);
 
             convertView.setTag(holder);
         }
@@ -77,7 +74,6 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        //---------------------------Stuff to change--------------------------------------------
         String name_ = getItem(position).getName();
         String imagePath = getItem(position).getProfileImage();
         holder.name.setText(name_);
@@ -105,7 +101,6 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
                 holder.mProgressBar.setVisibility(View.GONE);
             }
         });
-        //--------------------------------------------------------------------------------------
 
         return convertView;
     }

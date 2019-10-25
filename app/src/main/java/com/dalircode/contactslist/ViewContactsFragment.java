@@ -49,7 +49,7 @@ public class ViewContactsFragment extends Fragment {
     OnAddContactListener mOnAddContact;
 
 
-    //variables and widgets
+
     private static final int STANDARD_APPBAR = 0;
     private static final int SEARCH_APPBAR = 1;
     private int mAppBarState;
@@ -76,7 +76,6 @@ public class ViewContactsFragment extends Fragment {
         setAppBarState(STANDARD_APPBAR);
         setupContactsList();
 
-        //navigate to add contact fragment
         FloatingActionButton fab = view.findViewById(R.id.fabAddContact);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -127,18 +126,6 @@ public class ViewContactsFragment extends Fragment {
 
     private void setupContactsList() {
         final ArrayList<Contact> contacts = new ArrayList<>();
-        /*contacts.add(new Contact("Arvin Arian", "073-5812261", "Mobile", "k.dalir@gmail.com", testImageURL));
-        contacts.add(new Contact("Kamran Dalir", "073-5812261", "Mobile", "k.dalir@gmail.com", testImageURL));
-        contacts.add(new Contact("Kamran Dalir", "073-5812261", "Mobile", "k.dalir@gmail.com", testImageURL));
-        contacts.add(new Contact("Kamran Dalir", "073-5812261", "Mobile", "k.dalir@gmail.com", testImageURL));
-        contacts.add(new Contact("Kamran Dalir", "073-5812261", "Mobile", "k.dalir@gmail.com", testImageURL));
-        contacts.add(new Contact("Kamran Dalir", "073-5812261", "Mobile", "k.dalir@gmail.com", testImageURL));
-        contacts.add(new Contact("Kamran Dalir", "073-5812261", "Mobile", "k.dalir@gmail.com", testImageURL));
-        contacts.add(new Contact("Kamran Dalir", "073-5812261", "Mobile", "k.dalir@gmail.com", testImageURL));
-        contacts.add(new Contact("Kamran Dalir", "073-5812261", "Mobile", "k.dalir@gmail.com", testImageURL));
-        contacts.add(new Contact("Kamran Dalir", "073-5812261", "Mobile", "k.dalir@gmail.com", testImageURL));
-        contacts.add(new Contact("Kamran Dalir", "073-5812261", "Mobile", "k.dalir@gmail.com", testImageURL));
-        contacts.add(new Contact("Kamran Dalir", "073-5812261", "Mobile", "k.dalir@gmail.com", testImageURL));*/
 
         DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
         Cursor cursor = databaseHelper.getAllContacts();
@@ -188,8 +175,7 @@ public class ViewContactsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onItemClick: navigating to " + getString(R.string.contact_fragment));
-
-                //pass the contact to the interface and send it to MainActivity
+                
                 mContactListner.OnContactSelected(contacts.get(position));
 
 

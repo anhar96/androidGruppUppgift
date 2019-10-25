@@ -64,13 +64,11 @@ public class ContactFragment extends Fragment {
         mContact = getContactFromBundle();
 
 
-        //required for setting up the toolbar
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
 
         init();
 
-        //navigation for the backarrow
         ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
         ivBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,12 +76,12 @@ public class ContactFragment extends Fragment {
 
                 Log.d(TAG, "onClick: clicked back arrow.");
 
-                //remove previous fragment from the backstack (therefore navigating back)
+
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
-        // navigate to the edit contact fragment to edit the contact selected
+
         ImageView ivEdit = view.findViewById(R.id.ivEdit);
         ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +119,6 @@ public class ContactFragment extends Fragment {
     }
 
 
-    //select an option from menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -140,10 +137,7 @@ public class ContactFragment extends Fragment {
                     if (databaseHelper.deleteContact(contactID) > 0) {
                         Toast.makeText(getActivity(), "Contact Deleted", Toast.LENGTH_SHORT).show();
 
-                        //clear the arguments ont he current bundle since the contact is deleted
                         this.getArguments().clear();
-
-                        //remove previous fragemnt from the backstack (therefore navigating back)
                         getActivity().getSupportFragmentManager().popBackStack();
                     } else {
                         Toast.makeText(getActivity(), "Database Error", Toast.LENGTH_SHORT).show();
@@ -163,7 +157,7 @@ public class ContactFragment extends Fragment {
         while(cursor.moveToNext()){
             contactID = cursor.getInt(0);
         }
-        if(contactID > -1){ // If the contact doesn't still exists then anvigate back by popping the stack
+        if(contactID > -1){
             init();
         }else{
             this.getArguments().clear(); //optional clear arguments but not necessary

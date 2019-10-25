@@ -27,7 +27,6 @@ public class UniversalImageLoader {
     }
 
     public ImageLoaderConfiguration getConfig(){
-        //Universal Image Loader Setup
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .showImageOnLoading(defaultImage)
                 .showImageForEmptyUri(defaultImage)
@@ -36,12 +35,6 @@ public class UniversalImageLoader {
                 .cacheOnDisk(true).resetViewBeforeLoading(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .displayer(new FadeInBitmapDisplayer(300)).build();
-
-//        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext)
-//                .defaultDisplayImageOptions(defaultOptions)
-//                .memoryCache(new WeakMemoryCache())
-//                .diskCacheSize(100 * 1024 * 1024)
-//                .build();
 
         return new ImageLoaderConfiguration.Builder(mContext)
                 .defaultDisplayImageOptions(defaultOptions)
